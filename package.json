@@ -1,0 +1,11 @@
+{
+  "name": "express-client-hints",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "ssh://git@github.com/RyotaSugawara/express-client-hints.git",
+  "author": "sugawara-ryota <sugawara_ryota@cyberagent.co.jp>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}
