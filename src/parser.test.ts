@@ -1,7 +1,7 @@
 import test from 'ava';
 import {
   clientHintsUserAgentParser,
-  earlyChromeUaParser,
+  earlyChUaParser,
   greaseLikeUserAgentParser,
   shListParser,
 } from './parser';
@@ -20,15 +20,27 @@ test('shListParser: should return string[]', t => {
   t.deepEqual(shListParser(VALID_UA_LIST), [VALID_UA_1, VALID_UA_2]);
 });
 
-test('earlyChromeUaParser: should return UABrandVersion if early chrome', t => {
-  t.deepEqual(earlyChromeUaParser(EARLY_CHROME_UA), {
+test('earlyChUaParser: should return UABrandVersion if early ua patterns', t => {
+  t.deepEqual(earlyChUaParser(EARLY_CHROME_UA), {
     brand: 'Google Chrome',
     version: '80',
   });
+  t.deepEqual(earlyChUaParser('Brave Browser 79'), {
+    brand: 'Brave Browser',
+    version: '79',
+  });
+  t.deepEqual(earlyChUaParser('Microsoft Edge 80'), {
+    brand: 'Microsoft Edge',
+    version: '80',
+  });
+  t.deepEqual(earlyChUaParser('Google Chrome 81.0.4042.0'), {
+    brand: 'Google Chrome',
+    version: '81.0.4042.0',
+  });
 });
 
-test('earlyChromeUaParser: should return empty UABrandVersion if not early chrome', t => {
-  t.deepEqual(earlyChromeUaParser(VALID_UA_1), {
+test('earlyChUaParser: should return empty UABrandVersion if not early ua', t => {
+  t.deepEqual(earlyChUaParser(VALID_UA_1), {
     brand: '',
     version: '',
   });
@@ -68,6 +80,6 @@ test('clientHintsUserAgentParser: should return UABrandVersion[] if valid ua', t
 
 test('clientHintsUserAgentParser: should return UABrandVersion[] if early chrome', t => {
   t.deepEqual(clientHintsUserAgentParser(EARLY_CHROME_UA), [
-    earlyChromeUaParser(EARLY_CHROME_UA),
+    earlyChUaParser(EARLY_CHROME_UA),
   ]);
 });

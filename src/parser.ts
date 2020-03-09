@@ -3,14 +3,14 @@ export interface UABrandVersion {
   version: string;
 }
 
-const EARLY_CHROME_REGEXP = /^(Google Chrome) (\d+)$/;
+const EARLY_CH_UA_REGEXP = /^(.*) ([\d.]+)$/;
 
 export const shListParser = (shList: string): string[] => {
   return shList.split(',').map(shString => shString.trim());
 };
 
-export const earlyChromeUaParser = (uaString: string): UABrandVersion => {
-  const match = uaString.match(EARLY_CHROME_REGEXP);
+export const earlyChUaParser = (uaString: string): UABrandVersion => {
+  const match = uaString.match(EARLY_CH_UA_REGEXP);
   if (!match) {
     return { brand: '', version: '' };
   }
@@ -20,8 +20,8 @@ export const earlyChromeUaParser = (uaString: string): UABrandVersion => {
 };
 
 export const greaseLikeUserAgentParser = (uaString: string): UABrandVersion => {
-  if (EARLY_CHROME_REGEXP.test(uaString)) {
-    return earlyChromeUaParser(uaString);
+  if (EARLY_CH_UA_REGEXP.test(uaString)) {
+    return earlyChUaParser(uaString);
   }
 
   const [_brand, _version] = uaString.split(';').map(str => str.trim());
