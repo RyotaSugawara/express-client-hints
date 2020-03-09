@@ -67,7 +67,7 @@ test('should return existing client-hints', async t => {
   ]);
 });
 
-test('should return without errors in invalid ua text', async t => {
+test('should return client hints if early chrome', async t => {
   const app = createApp();
   const res = await supertest(app)
     .get('/')
@@ -82,4 +82,16 @@ test('should return without errors in invalid ua text', async t => {
       version: '80',
     },
   ]);
+});
+
+test('should return without errors if invalid ua', async t => {
+  const app = createApp();
+  const res = await supertest(app)
+    .get('/')
+    .set('sec-ch-ua', 'foo, bar')
+    .set('sec-ch-ua-mobile', '?0');
+  t.is(res.body.brand, null);
+  t.is(res.body.version, null);
+  t.is(res.body.mobile, null);
+  t.deepEqual(res.body._brandVersions, null);
 });

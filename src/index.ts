@@ -101,11 +101,6 @@ const clientHintsHandler = (accepts: string[] = []): Handler => (
     return;
   }
 
-  if (brandVersionList.length === 0) {
-    next();
-    return;
-  }
-
   const primaryBrandVersion = brandVersionList[0];
   if (!primaryBrandVersion.version) {
     next();
