@@ -7,7 +7,6 @@
   "author": "sugawara-ryota <sugawara_ryota@cyberagent.co.jp>",
   "license": "MIT",
   "devDependencies": {
-    "@ava/typescript": "^1.1.1",
     "@types/supertest": "^2.0.8",
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
@@ -16,6 +15,8 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "express": "^4.17.1",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "nyc": "^15.0.0",
     "prettier": "^1.19.1",
     "supertest": "^4.0.2",

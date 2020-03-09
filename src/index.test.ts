@@ -76,8 +76,10 @@ test('should return without errors in invalid ua text', async t => {
   t.is(res.body.brand, 'Google Chrome');
   t.is(res.body.version, '80');
   t.is(res.body.mobile, false);
-  t.deepEqual(res.body._brandVersions, {
-    brand: 'Google Chrome',
-    version: '80',
-  });
+  t.deepEqual(res.body._brandVersions, [
+    {
+      brand: 'Google Chrome',
+      version: '80',
+    },
+  ]);
 });

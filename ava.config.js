@@ -1,8 +1,4 @@
 export default {
-  typescript: {
-    extensions: ["ts"],
-    rewritePaths: {
-      "src/": "lib/"
-    }
-  }
+  extensions: ['ts'],
+  require: ['ts-node/register'],
 };
