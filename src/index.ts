@@ -1,5 +1,5 @@
-import { Handler, Request, Response, NextFunction } from "express";
-import { clientHintsUserAgentParser, UABrandVersion } from "./parser";
+import { Handler, Request, Response, NextFunction } from 'express';
+import { clientHintsUserAgentParser, UABrandVersion } from './parser';
 
 /**
  * Override Express.Request to create new Request fields
@@ -33,7 +33,7 @@ export interface ClientHintsDetail {
  * sh-boolean
  * @see {@link https://tools.ietf.org/html/draft-ietf-httpbis-header-structure-15#section-3.3.6}
  */
-export type StructuredHeadersBoolean = "?0" | "?1";
+export type StructuredHeadersBoolean = '?0' | '?1';
 
 /**
  * @see {@link https://tools.ietf.org/html/draft-ietf-httpbis-client-hints-10#section-3}
@@ -45,7 +45,7 @@ export type StructuredHeadersBoolean = "?0" | "?1";
  * ```
  */
 const CLIENT_HINTS_RESPONSE_HEADER_MAP = {
-  ACCEPT_CH: "Accept-CH"
+  ACCEPT_CH: 'Accept-CH',
 };
 
 /**
@@ -53,19 +53,19 @@ const CLIENT_HINTS_RESPONSE_HEADER_MAP = {
  * @see {@link https://wicg.github.io/ua-client-hints/#http-ua-hints}
  */
 const CLIENT_HINTS_REQUREST_HEADER_MAP = {
-  SEC_CH_UA: "Sec-CH-UA",
-  SEC_CH_UA_ARCH: "Sec-CH-UA-Arch",
-  SEC_CH_UA_MOBILE: "Sec-CH-UA-Mobile",
-  SEC_CH_UA_MODEL: "Sec-CH-UA-Model",
-  SEC_CH_UA_PLATFORM: "Sec-CH-UA-Platform",
-  SEC_CH_UA_PLATFORM_VERSION: "Sec-CH-UA-Platform-Version"
+  SEC_CH_UA: 'Sec-CH-UA',
+  SEC_CH_UA_ARCH: 'Sec-CH-UA-Arch',
+  SEC_CH_UA_MOBILE: 'Sec-CH-UA-Mobile',
+  SEC_CH_UA_MODEL: 'Sec-CH-UA-Model',
+  SEC_CH_UA_PLATFORM: 'Sec-CH-UA-Platform',
+  SEC_CH_UA_PLATFORM_VERSION: 'Sec-CH-UA-Platform-Version',
 };
 
 const clientHintsHandler = (accepts: string[] = []): Handler => (
   req: Request,
   res: Response,
-  next: NextFunction
-) => {
+  next: NextFunction,
+): void => {
   // set accept-ch header if have accepts setting.
   if (accepts.length) {
     res.set(CLIENT_HINTS_RESPONSE_HEADER_MAP.ACCEPT_CH, accepts);
@@ -79,7 +79,7 @@ const clientHintsHandler = (accepts: string[] = []): Handler => (
     platform: null,
     platformVersion: null,
     version: null,
-    _brandVersions: null
+    _brandVersions: null,
   };
 
   /**
@@ -90,10 +90,10 @@ const clientHintsHandler = (accepts: string[] = []): Handler => (
    * e.g. Sec-CH-UA: "Chrome"; v="82", "NotBrowser"; v="0"
    */
   const shListUserAgent =
-    req.get(CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA) || "";
+    req.get(CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA) || '';
   const brandVersionList = clientHintsUserAgentParser(shListUserAgent);
   const mobileString = req.get(
-    CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_MOBILE
+    CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_MOBILE,
   );
 
   if (!mobileString) {
@@ -117,13 +117,13 @@ const clientHintsHandler = (accepts: string[] = []): Handler => (
   req.clientHints._brandVersions = brandVersionList;
 
   req.clientHints.mobile =
-    req.get(CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_MOBILE) === "?1";
+    req.get(CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_MOBILE) === '?1';
 
   const architecture = req.get(CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_ARCH);
   const model = req.get(CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_MODEL);
   const platform = req.get(CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_PLATFORM);
   const platformVersion = req.get(
-    CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_PLATFORM_VERSION
+    CLIENT_HINTS_REQUREST_HEADER_MAP.SEC_CH_UA_PLATFORM_VERSION,
   );
   if (architecture !== undefined) {
     req.clientHints.architecture = architecture;

@@ -6,13 +6,13 @@ export interface UABrandVersion {
 const EARLY_CHROME_REGEXP = /^(Google Chrome) (\d+)$/;
 
 export const shListParser = (shList: string): string[] => {
-  return shList.split(",").map(shString => shString.trim());
+  return shList.split(',').map(shString => shString.trim());
 };
 
 export const earlyChromeUaParser = (uaString: string): UABrandVersion => {
   const match = uaString.match(EARLY_CHROME_REGEXP);
   if (!match) {
-    return { brand: "", version: "" };
+    return { brand: '', version: '' };
   }
 
   const [, brand, version] = match;
@@ -24,15 +24,15 @@ export const greaseLikeUserAgentParser = (uaString: string): UABrandVersion => {
     return earlyChromeUaParser(uaString);
   }
 
-  const [_brand, _version] = uaString.split(";").map(str => str.trim());
+  const [_brand, _version] = uaString.split(';').map(str => str.trim());
   const brandVersion: UABrandVersion = {
-    brand: "",
-    version: ""
+    brand: '',
+    version: '',
   };
   try {
     brandVersion.brand = JSON.parse(_brand) as string;
     brandVersion.version = JSON.parse(
-      _version.replace(/^v=(.+)/, "$1")
+      _version.replace(/^v=(.+)/, '$1'),
     ) as string;
   } catch (e) {
     brandVersion.brand = _brand;
@@ -41,10 +41,10 @@ export const greaseLikeUserAgentParser = (uaString: string): UABrandVersion => {
 };
 
 export const clientHintsUserAgentParser = (
-  shList: string
+  shList: string,
 ): UABrandVersion[] => {
   const brandVersionList = shListParser(shList);
   return brandVersionList.map(brandVersion =>
-    greaseLikeUserAgentParser(brandVersion)
+    greaseLikeUserAgentParser(brandVersion),
   );
 };

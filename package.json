@@ -9,9 +9,15 @@
   "devDependencies": {
     "@ava/typescript": "^1.1.1",
     "@types/supertest": "^2.0.8",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
     "ava": "^3.5.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "express": "^4.17.1",
     "nyc": "^15.0.0",
+    "prettier": "^1.19.1",
     "supertest": "^4.0.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
@@ -21,7 +27,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "ava -v",
+    "test": "yarn test:spec && yarn test:lint",
+    "test:spec": "ava -v",
+    "test:lint": "eslint . -v --ext .ts",
     "coverage": "nyc ava"
   }
 }
